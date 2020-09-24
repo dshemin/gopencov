@@ -5,6 +5,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"net/http"
+	"time"
 )
 
 // Run run application REST API server
@@ -26,7 +27,11 @@ func Run(ctx context.Context, logger echo.Logger, address string) error {
 
 	go func() {
 		<-ctx.Done()
-		if err := e.Close(); err != nil {
+
+		shutdownCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+
+		if err := e.Shutdown(shutdownCtx); err != nil {
 			e.Logger.Errorf("cannot stop server: %s", err)
 		}
 	}()
