@@ -12,7 +12,7 @@ fmt:
 
 .PHONY: lint
 lint:
-	gofmt -d `find . -type f -name '*.go' -not -path "./vendor/*"`
+	gofmt -d internal/ cmd/
 	revive \
 		-config ./revive.toml \
 		-exclude ./vendor/... \
