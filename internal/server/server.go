@@ -15,10 +15,14 @@ func Run(ctx context.Context, logger echo.Logger, address string) error {
 	e.HideBanner = true
 	e.HidePort = true
 	e.Logger = logger
+	e.Server.ReadTimeout = 5 * time.Second
+	e.Server.WriteTimeout = 5 * time.Second
 
 	// Middleware
+	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.Secure())
 
 	// Routes
 	e.GET("/", func(c echo.Context) error {

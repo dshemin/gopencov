@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/dshemin/gopencov/internal/config"
+	"github.com/dshemin/gopencov/internal/database"
 	"github.com/dshemin/gopencov/internal/logger"
 	"github.com/dshemin/gopencov/internal/server"
 	"os"
@@ -39,6 +40,11 @@ func run() error {
 		}
 	}()
 	log.Infof("Start application with settings %s", spew.Sdump(cfg))
+
+	_, err = database.New(cfg.DBDriver, cfg.DBURI)
+	if err != nil {
+		return fmt.Errorf("cannot initialize DB: %w", err)
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()

@@ -1,6 +1,10 @@
 .PHONY: build
-build:
+build: generate
 	go build -mod=vendor -o server ./cmd/server/main.go
+
+.PHONY: generate
+generate:
+	go generate ./...
 
 .PHONY: test
 test:
@@ -16,5 +20,6 @@ lint:
 	revive \
 		-config ./revive.toml \
 		-exclude ./vendor/... \
+		-exclude ./internal/database/internal/... \
 		-formatter stylish \
 		./...

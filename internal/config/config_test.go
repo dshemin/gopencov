@@ -22,22 +22,32 @@ func setenvs(t *testing.T, args ...string) {
 
 func TestCollect(t *testing.T) {
 	t.Run("positive", func(t *testing.T) {
-		t.Run("without envs", func(t *testing.T) {
+		t.Run("without optional envs", func(t *testing.T) {
+			setenvs(
+				t,
+				envDBDriver, "postgres",
+				envDBURI, "postgres://",
+			)
+
 			cfg, err := Collect()
 			require.NoError(t, err)
 
 			assert.Equal(t, "0.0.0.0:4000", cfg.Address)
 			assert.Equal(t, time.Minute, cfg.StopTimeout)
 			assert.Equal(t, "info", cfg.LogLevel)
+			assert.Equal(t, "postgres", cfg.DBDriver)
+			assert.Equal(t, "postgres://", cfg.DBURI)
 		})
 
-		t.Run("with envs", func(t *testing.T) {
+		t.Run("with all envs", func(t *testing.T) {
 			setenvs(
 				t,
 				envKeyIP, "192.0.2.1",
 				envKeyPort, "9999",
 				envKeyStopTimeout, "30s",
 				envLogLevel, "off",
+				envDBDriver, "postgres",
+				envDBURI, "postgres://",
 			)
 
 			cfg, err := Collect()
@@ -46,6 +56,8 @@ func TestCollect(t *testing.T) {
 			assert.Equal(t, "192.0.2.1:9999", cfg.Address)
 			assert.Equal(t, 30*time.Second, cfg.StopTimeout)
 			assert.Equal(t, "off", cfg.LogLevel)
+			assert.Equal(t, "postgres", cfg.DBDriver)
+			assert.Equal(t, "postgres://", cfg.DBURI)
 		})
 	})
 
@@ -54,6 +66,21 @@ func TestCollect(t *testing.T) {
 			setenvs(
 				t,
 				envKeyStopTimeout, "invalid",
+			)
+
+			_, err := Collect()
+			require.EqualError(t, err, `invalid stop timeout format: time: invalid duration "invalid"`)
+		})
+
+		t.Run("without DB driver", func(t *testing.T) {
+			_, err := Collect()
+			require.EqualError(t, err, `invalid stop timeout format: time: invalid duration "invalid"`)
+		})
+
+		t.Run("without DB URI", func(t *testing.T) {
+			setenvs(
+				t,
+				envDBDriver, "postgres",
 			)
 
 			_, err := Collect()

@@ -1,0 +1,11 @@
+/.git
+/.idea
+/server
+/data/postgresql
+/.github
+/data
+/docker-composer.yml
+/Dockerfile
+/LICENSE
+/README.md
+/revive.toml
