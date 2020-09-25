@@ -3,14 +3,16 @@ version: '3'
 services:
   app:
     build:
-      context: ./
-    expose:
+      context: ..
+      dockerfile: build/server.dockerfile
+    ports:
       - 4000
     environment:
       GOPENCOV_DB_DRIVER: "postgres"
       GOPENCOV_DB_URI: "postgres://gopencov:gopencov@postgresql/gopencov?sslmode=disable"
     depends_on:
-      - postgresql
+      postgresql:
+        condition: service_healthy
 
   postgresql:
     image: postgres:12.2-alpine
@@ -21,4 +23,9 @@ services:
     ports:
       - 5555:5432
     volumes:
-      - ./data/postgresql:/var/lib/postgresql/data
+      - ../data/postgresql:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gopencov"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

@@ -1,7 +1,11 @@
 #!/bin/sh
 
-echo "Generate bin data for with the PostgreSQL migrations"
-go-bindata -pkg postgresql \
-  -o internal/postgresql/migrations.go \
-  -prefix ../../data/migrations/postgresql \
-  ../../data/migrations/postgresql/...
+DBS="postgresql"
+
+for db in $DBS; do
+  echo "Generate bin data for $db migrations"
+  go-bindata -pkg $db \
+    -o internal/$db/migrations.go \
+    -prefix ../../migrations/$db \
+    ../../migrations/$db/...
+done
