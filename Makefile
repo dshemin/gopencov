@@ -6,16 +6,26 @@ build: generate
 generate:
 	go generate ./...
 
-.PHONY: test
-test:
-	go test -mod=vendor -race -v -cover $$(go list ./... )
-
 .PHONY: fmt
 fmt:
 	go fmt ./...
 
+.PHONY: test
+test: test/server test/frontend
+
+.PHONY: test/server
+test/server:
+	go test -mod=vendor -race -v -cover $$(go list ./... )
+
+.PHONY: test/frontend
+test/frontend:
+	cd web && yarn test
+
 .PHONY: lint
-lint:
+lint: lint/server lint/frontend
+
+.PHONY: lint/server
+lint/server:
 	gofmt -d internal/ cmd/
 	revive \
 		-config ./revive.toml \
@@ -23,3 +33,7 @@ lint:
 		-exclude ./internal/database/internal/... \
 		-formatter stylish \
 		./...
+
+.PHONY: lint/frontend
+lint/frontend:
+	cd web && yarn lint

@@ -14,6 +14,15 @@ services:
       postgresql:
         condition: service_healthy
 
+  frontend:
+    build:
+      context: ../web
+      dockerfile: ../build/frontend.dockerfile
+    ports:
+      - 8080:80
+    depends_on:
+      - app
+
   postgresql:
     image: postgres:12.2-alpine
     restart: always

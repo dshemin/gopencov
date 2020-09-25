@@ -1,0 +1,188 @@
+{
+  "extends": [
+    "react-app"
+  ],
+  "plugins": [
+    "modules-newline"
+  ],
+  "rules": {
+    "@typescript-eslint/array-type": ["error", {
+      "default": "array-simple"
+    }],
+    "@typescript-eslint/ban-types": ["error", {
+      "types": {
+        "Object": {
+          "message": "Avoid using the `Object` type. Did you mean `object`?"
+        },
+        "Function": {
+          "message": "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."
+        },
+        "Boolean": {
+          "message": "Avoid using the `Boolean` type. Did you mean `boolean`?"
+        },
+        "Number": {
+          "message": "Avoid using the `Number` type. Did you mean `number`?"
+        },
+        "String": {
+          "message": "Avoid using the `String` type. Did you mean `string`?"
+        },
+        "Symbol": {
+          "message": "Avoid using the `Symbol` type. Did you mean `symbol`?"
+        }
+      }
+    }],
+    "@typescript-eslint/consistent-type-definitions": "error",
+    "@typescript-eslint/explicit-member-accessibility": ["error", {
+      "accessibility": "no-public"
+    }],
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/interface-name-prefix": ["error", {
+      "prefixWithI": "always"
+    }],
+    "@typescript-eslint/member-delimiter-style": ["error", {
+      "multiline": {
+        "delimiter": "semi",
+        "requireLast": true
+      },
+      "singleline": {
+        "delimiter": "semi",
+        "requireLast": false
+      }
+    }],
+    "@typescript-eslint/member-ordering": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-parameter-properties": "off",
+    "@typescript-eslint/prefer-for-of": "error",
+    "@typescript-eslint/prefer-function-type": "error",
+    "@typescript-eslint/semi": ["error", "always"],
+    "@typescript-eslint/triple-slash-reference": ["error", {
+      "path": "always",
+      "types": "prefer-import",
+      "lib": "always"
+    }],
+    "@typescript-eslint/type-annotation-spacing": "off",
+    "@typescript-eslint/unified-signatures": "error",
+    "arrow-body-style": "error",
+    "arrow-parens": ["off", "always"],
+    "camelcase": "off",
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "never"
+    }],
+    "complexity": "off",
+    "constructor-super": "error",
+    "curly": "error",
+    "eol-last": "off",
+    "getter-return": "warn",
+    "guard-for-in": "error",
+    "id-blacklist": [
+      "error",
+      "Number",
+      "number",
+      "String",
+      "string",
+      "Boolean",
+      "boolean"
+    ],
+    "id-match": "error",
+    "import/order": "off",
+    "linebreak-style": "off",
+    "max-classes-per-file": ["error", 1],
+    "max-len": "off",
+    "new-parens": "off",
+    "newline-per-chained-call": "off",
+    "no-bitwise": "off",
+    "no-caller": "error",
+    "no-cond-assign": "error",
+    "no-console": "error",
+    "no-const-assign": "warn",
+    "no-debugger": "error",
+    "no-empty": "error",
+    "no-eval": "error",
+    "no-extra-semi": "error",
+    "no-fallthrough": "off",
+    "no-invalid-this": "off",
+    "no-irregular-whitespace": "off",
+    "no-multiple-empty-lines": "off",
+    "no-negated-in-lhs": "warn",
+    "no-new-wrappers": "error",
+    "no-redeclare": ["warn", {
+      "builtinGlobals": false
+    }],
+    "no-restricted-properties": [
+      "error",
+      {
+        "object": "require",
+        "property": "ensure",
+        "message": "Please use import() instead. More info: https://facebook.github.io/create-react-app/docs/code-splitting"
+      },
+      {
+        "object": "System",
+        "property": "import",
+        "message": "Please use import() instead. More info: https://facebook.github.io/create-react-app/docs/code-splitting"
+      }
+    ],
+    "no-shadow": ["error", {
+      "hoist": "all"
+    }],
+    "no-throw-literal": "error",
+    "no-trailing-spaces": "error",
+    "no-undef-init": "error",
+    "no-underscore-dangle": "error",
+    "no-unreachable": "warn",
+    "no-unsafe-finally": "error",
+    "no-unused-labels": "error",
+    "no-useless-computed-key": "warn",
+    "no-useless-concat": "warn",
+    "no-useless-escape": "warn",
+    "no-useless-rename": ["warn", {
+      "ignoreDestructuring": false,
+      "ignoreImport": false,
+      "ignoreExport": false
+    }],
+    "no-whitespace-before-property": "warn",
+    "no-with": "warn",
+    "object-shorthand": ["error", "always"],
+    "one-var": ["error", "never"],
+    "quote-props": "off",
+    "quotes": ["error", "single"],
+    "radix": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "require-yield": "warn",
+    "rest-spread-spacing": ["warn", "never"],
+    "space-before-function-paren": "off",
+    "space-in-parens": ["off", "never"],
+    "spaced-comment": [
+      "error",
+      "always",
+      {
+        "markers": [
+          "/"
+        ]
+      }
+    ],
+    "strict": ["warn", "never"],
+    "unicode-bom": ["warn", "never"],
+    "use-isnan": "error",
+    "valid-typeof": "off",
+    "modules-newline/import-declaration-newline": "warn",
+    "object-curly-spacing": [2, "always"],
+    "indent": ["error", 4, {
+      "ImportDeclaration": "first"
+    }],
+    "object-curly-newline": ["error", {
+      "ImportDeclaration": { "minProperties": 2, "multiline": true }
+    }]
+  },
+  "overrides": [
+    {
+      "files": ["*.test.ts", "*.test.tsx"],
+      "rules": {
+        "indent": "off"
+      }
+    }
+  ]
+}
