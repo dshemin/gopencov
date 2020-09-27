@@ -1,33 +1,37 @@
+.PHONY: run
+run:
+	@sh ./scripts/run.sh
+
 .PHONY: build
-build: generate
-	go build -mod=vendor -o server ./cmd/server/main.go
+build:
+	@sh ./scripts/build.sh
 
 .PHONY: generate
 generate:
-	go generate ./...
+	@go generate ./...
 
 .PHONY: fmt
 fmt:
-	go fmt ./...
+	@go fmt ./...
 
 .PHONY: test
 test: test/server test/frontend
 
 .PHONY: test/server
 test/server:
-	go test -mod=vendor -race -v -cover $$(go list ./... )
+	@go test -mod=vendor -race -v -cover $$(go list ./... )
 
 .PHONY: test/frontend
 test/frontend:
-	cd web && yarn test
+	@cd web && yarn test
 
 .PHONY: lint
 lint: lint/server lint/frontend
 
 .PHONY: lint/server
 lint/server:
-	gofmt -d internal/ cmd/
-	revive \
+	@gofmt -d internal/ cmd/
+	@revive \
 		-config ./revive.toml \
 		-exclude ./vendor/... \
 		-exclude ./internal/database/internal/... \
@@ -36,4 +40,4 @@ lint/server:
 
 .PHONY: lint/frontend
 lint/frontend:
-	cd web && yarn lint
+	@cd web && yarn lint
