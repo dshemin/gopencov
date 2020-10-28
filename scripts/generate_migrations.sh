@@ -1,6 +1,9 @@
 #!/bin/sh
+#
+# Use go-bindata for packing all database migration into the application.
+#
 
-DBS="postgresql"
+DBS="postgres"
 
 for db in $DBS; do
   echo "Generate bin data for $db migrations"

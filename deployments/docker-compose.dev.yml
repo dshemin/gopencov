@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ../build
+      dockerfile: server.dev.dockerfile
+    ports:
+      - 4000:4000
+    volumes:
+      - ../:/src
+    environment:
+      GOPENCOV_DB_DRIVER: "${DB_DRIVER}"
+      GOPENCOV_DB_URI: "${DB_URI}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ../build
+      dockerfile: frontend.dev.dockerfile
+    volumes:
+      - ../web:/src
+    ports:
+      - 3000:3000
+    depends_on:
+      - app
+#    tty: true
+
+  postgres:
+    image: postgres:12.2-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASS}"
+    volumes:
+      - ../data/postgres:/var/lib/postgres/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
