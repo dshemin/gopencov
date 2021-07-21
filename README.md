@@ -1,6 +1,8 @@
 GOPENCOV
 ========
 
+[![Coverage Status](https://coveralls.io/repos/github/dshemin/gopencov/badge.svg?branch=master)](https://coveralls.io/github/dshemin/gopencov?branch=master)
+
 Code coverage history application. Inspired by [opencov](https://github.com/danhper/opencov) but written on Golang.
 
 DEVELOPMENT
